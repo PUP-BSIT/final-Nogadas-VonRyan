@@ -1,82 +1,46 @@
-const commentName = document.querySelector("#comment_name");
-const commentContent = document.querySelector("#comment_content");
-const commentButton = document.querySelector("#comment_button");
+const intro = document.querySelector('.intro');
+const greeting = document.querySelector('.greeting');
+const descriptor = document.querySelector('#descriptor');
+let animationInterval;
 
-const commentList = document.querySelector(".comment-list");
-const commentListData = [
-	{
-		name: "Jheferson",
-		comment: `Your goals are very ambitious!`,
-		date: new Date("Sat Apr 27 22:28:24 2024")
-	},
-	{
-		name: "Andrea",
-		comment: `I hope you achieve all your goals that will 
-				  help you be successful in life`,
-		date: new Date("Sat Apr 27 22:45:41 2024")
-	},
-	{
-		name: "Mau",
-		comment: `Keep on going hard work pays off`,
-		date: new Date("Sat Apr 27 23:02:34 2024")
-	},
-	{
-		name: "Mark",
-		comment: `Your perspective is refreshing`,
-		date: new Date("Sat Apr 27 23:06:32 2024")
-	}
-];
+function introAnimation() {
+    const descriptions = ['Student','Hobbyist','Future Developer'];
+    let current = 0;
 
-function validateComment() {
-	if (commentName.value && commentContent.value) {
-		commentButton.disabled = false;
-	} else {
-		commentButton.disabled = true;
-	}
+    setTimeout(() => {
+        greeting.scrollIntoView({ behavior: 'smooth' });
+    }, 1000)
+
+    animationInterval = setInterval(() => {
+        descriptor.textContent = descriptions[current];
+        current = (current + 1) % 3;
+    }, 1500);
 }
 
-function updateComments() {
-	commentList.innerHTML = "";
+introAnimation();
 
-	for (const commentData of commentListData) {
-		const newComment = document.createElement("li");
-		const formatDate = new Date(commentData.date);
+function doIt() {
+    const body = document.querySelector('body');
+    const description = document.querySelector('#descriptor_call');
 
-		newComment.innerHTML = `
-			<div class='upper-tags'>
-				<div class='user-tag'>${commentData.name}</div>
-				<div class='date-tag'>${formatDate.toLocaleString()}</div>
-			</div>
-			<div class='user-comment'>${commentData.comment}</div>`;
+    intro.textContent = 'I can do it.';
+    intro.scrollIntoView();
+    body.classList.add('white-theme');
+    descriptor.classList.add('white-color');
 
-		commentList.append(newComment);
-	}
+    setTimeout(() => {
+        intro.innerHTML = `I <span class='highlight-color'>will</span> do it!`;
+    }, 1000);
+
+    setTimeout(() => {
+        greeting.scrollIntoView();
+        clearInterval(animationInterval);
+        description.textContent = "I am a ";
+        descriptor.textContent = 'Future Developer';
+    }, 2000);
+
+    setTimeout(() => {
+        description.textContent = "I will be a ";
+        descriptor.textContent = "Developer";
+    }, 3000);
 }
-
-function sortComments() {
-	const sortType = document.querySelector("#sort_type");
-	const newestSortType = "newest_first";
-
-	commentListData.sort((a, b) => {
-		if (sortType.value == newestSortType) {
-			return a.date - b.date;
-		} else {
-			return b.date - a.date;
-		}
-	});
-	
-	updateComments();
-}
-
-function addComment() {
-	const newComment = {
-		name: commentName.value,
-		comment: commentContent.value,
-		date: new Date(),
-	};
-
-	commentListData.push(newComment);
-	sortComments();
-}
-
-sortComments();

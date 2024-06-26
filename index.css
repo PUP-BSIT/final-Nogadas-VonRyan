@@ -50,6 +50,13 @@ li {
     width: fit-content;
     padding: 1rem;
     border-radius: 1rem;
+    transition: transform 0.2s;
+}
+
+li:hover {
+    background-color: #ffffff;
+    color: #6253a7;
+    transform: scale(1.15);
 }
 
 img {
